@@ -1,0 +1,589 @@
+/* ==========================================================================
+   ۱. متغیرها و ریست پایه
+   ========================================================================== */
+:root {
+  --bg-main: #F5F0DE;
+  --cream-soft: #FFFDF6;
+  --sand: #EAE3C6;
+  --sand-dark: #DED5AC;
+  --ink: #1E3A2C;
+  --ink-soft: #5F6E58;
+  --green: #3F7D53;
+  --green-deep: #24503A;
+  --gold: #B9862D;
+  --gold-light: #F4E8C1;
+  --ruby: #A6462D;
+  --shadow-sm: 0 2px 8px rgba(30, 58, 44, 0.04);
+  --shadow-md: 0 4px 14px rgba(30, 58, 44, 0.06);
+  --shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  direction: rtl;
+  text-align: right;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+input, select, textarea, button {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 14px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   ۲. لایوت اصلی برنامه (ریسپانسیو)
+   ========================================================================== */
+.main-wrapper {
+  min-height: 100vh;
+  padding: 16px 12px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-main);
+  direction: rtl;
+}
+
+@media (min-width: 768px) {
+  .main-wrapper {
+    padding: 30px 20px;
+  }
+}
+
+.workspace {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* ==========================================================================
+   ۳. مودال ورود و ثبت‌نام
+   ========================================================================== */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(30, 58, 44, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+}
+
+.auth-box {
+  background-color: var(--cream-soft);
+  border: 1.5px solid var(--sand-dark);
+  padding: 28px 20px;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 480px) {
+  .auth-box {
+    padding: 36px;
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-logo {
+  font-size: 36px;
+  margin-bottom: 6px;
+}
+
+.auth-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.auth-subtitle {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+.auth-toggle {
+  display: flex;
+  background-color: var(--sand);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  gap: 4px;
+}
+
+.toggle-btn {
+  flex: 1;
+  background: transparent;
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.toggle-btn.active {
+  background-color: var(--cream-soft);
+  color: var(--gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.auth-error {
+  background-color: #FDF2F2;
+  border: 1px solid #F8B4B4;
+  color: var(--ruby);
+  font-size: 12px;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.input-group input {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  width: 100%;
+}
+
+.input-group input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(185, 134, 45, 0.15);
+}
+
+.submit-button {
+  background-color: var(--green);
+  color: #FFFFFF;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.submit-button:hover {
+  background-color: var(--green-deep);
+}
+
+/* ==========================================================================
+   ۴. هدر بالای صفحه (ریسپانسیو و تمیز)
+   ========================================================================== */
+.header-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cream-soft);
+  border: 1px solid var(--sand-dark);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 16px;
+  gap: 14px;
+}
+
+@media (min-width: 640px) {
+  .header-card {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 24px;
+    margin-bottom: 22px;
+  }
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar-circle {
+  width: 44px;
+  height: 44px;
+  background-color: var(--sand);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid var(--sand-dark);
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 2px 0;
+}
+
+.user-name span {
+  color: var(--gold);
+}
+
+.logout-btn {
+  background: transparent;
+  color: var(--ruby);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.stats-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .stats-block {
+    display: flex;
+    width: auto;
+  }
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--sand);
+  border: 1px solid var(--sand-dark);
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   ۵. تب‌های اصلی ناوبری (ریسپانسیو)
+   ========================================================================== */
+.tabs-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 640px) {
+  .tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.tab-pill {
+  background-color: var(--sand);
+  color: var(--ink-soft);
+  border: 1px solid var(--sand-dark);
+  padding: 10px 4px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .tab-pill {
+    padding: 11px 22px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+}
+
+.tab-pill.active {
+  background-color: var(--gold);
+  color: #FFFFFF;
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(185, 134, 45, 0.25);
+}
+
+/* ==========================================================================
+   ۶. نوار مدیریت پروژه‌ها (ریسپانسیو)
+   ========================================================================== */
+.project-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--cream-soft);
+  border: 1px solid var(--sand-dark);
+  padding: 14px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .project-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+}
+
+.story-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .story-selector {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+  }
+}
+
+.story-selector label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.story-selector select {
+  width: 100%;
+  background-color: var(--sand);
+  border: 1px solid var(--sand-dark);
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  outline: none;
+}
+
+.story-creator {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .story-creator {
+    flex: 1;
+    gap: 8px;
+  }
+}
+
+.story-creator input {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid var(--sand-dark);
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  outline: none;
+  min-width: 0;
+}
+
+.btn-new-story {
+  background-color: var(--sand);
+  border: 1px solid var(--sand-dark);
+  color: var(--ink);
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-new-story:hover {
+  background-color: var(--sand-dark);
+}
+
+/* ==========================================================================
+   ۷. نوار چیپ‌های فصل‌ها (Scrollable Chips)
+   ========================================================================== */
+.chapters-wrapper {
+  margin-bottom: 16px;
+}
+
+.chapters-title {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.chapters-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.chapter-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--cream-soft);
+  border: 1px solid var(--sand-dark);
+  color: var(--ink);
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chapter-button .badge {
+  font-size: 10px;
+  color: var(--ink-soft);
+  background-color: var(--sand);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.chapter-button.active {
+  background-color: var(--green);
+  color: #FFFFFF;
+  border-color: var(--green);
+}
+
+.chapter-button.active .badge {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+.toast-save {
+  background-color: var(--gold-light);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   نشان نبض جامعه نویسندگان (Community Live Pulse Badge)
+   ========================================================================== */
+.community-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #EAE3C6;
+  border: 1px solid #DED5AC;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin: 4px 0 6px 0;
+  font-size: 12px;
+  color: #1E3A2C;
+}
+
+.community-live-pill b {
+  color: #B9862D;
+}
+
+.pulse-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #3F7D53;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(63, 125, 83, 0.7);
+  animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(63, 125, 83, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(63, 125, 83, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(63, 125, 83, 0);
+  }
+}
