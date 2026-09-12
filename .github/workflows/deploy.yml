@@ -28,12 +28,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install Dependencies
+        working-directory: ./writers-desk-frontend
         run: npm install --legacy-peer-deps
 
-      - name: Build
+      - name: Build Project
+        working-directory: ./writers-desk-frontend
         run: npm run build
 
       - name: Setup Pages
@@ -42,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          path: './writers-desk-frontend/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
